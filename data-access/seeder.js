@@ -1,5 +1,9 @@
-const mongoose = require('mongoose');
-const State = require('../models/state')
+const mongoose = require('mongoose'),
+        State = require('../models/state'),
+        Valid_Beds = require('../models/valid_beds'),
+        Valid_Baths = require('../models/valid_baths'),
+        Valid_PriceDictionary = require('../models/valid_price_dictionary'),
+        seedData = require('./seed-data');
 
 class Seeder {
     init() {
@@ -14,68 +18,40 @@ class Seeder {
 
     seed() {
         //States
-        var states = [
-            { "name": "Alabama", "abbreviation": "AL" },
-            { "name": "Montana", "abbreviation": "MT" },
-            { "name": "Alaska", "abbreviation": "AK" },
-            { "name": "Nebraska", "abbreviation": "NE" },
-            { "name": "Arizona", "abbreviation": "AZ" },
-            { "name": "Nevada", "abbreviation": "NV" },
-            { "name": "Arkansas", "abbreviation": "AR" },
-            { "name": "New Hampshire", "abbreviation": "NH" },
-            { "name": "California", "abbreviation": "CA" },
-            { "name": "New Jersey", "abbreviation": "NJ" },
-            { "name": "Colorado", "abbreviation": "CO" },
-            { "name": "New Mexico", "abbreviation": "NM" },
-            { "name": "Connecticut", "abbreviation": "CT" },
-            { "name": "New York", "abbreviation": "NY" },
-            { "name": "Delaware", "abbreviation": "DE" },
-            { "name": "North Carolina", "abbreviation": "NC" },
-            { "name": "Florida", "abbreviation": "FL" },
-            { "name": "North Dakota", "abbreviation": "ND" },
-            { "name": "Georgia", "abbreviation": "GA" },
-            { "name": "Ohio", "abbreviation": "OH" },
-            { "name": "Hawaii", "abbreviation": "HI" },
-            { "name": "Oklahoma", "abbreviation": "OK" },
-            { "name": "Idaho", "abbreviation": "ID" },
-            { "name": "Oregon", "abbreviation": "OR" },
-            { "name": "Illinois", "abbreviation": "IL" },
-            { "name": "Pennsylvania", "abbreviation": "PA" },
-            { "name": "Indiana", "abbreviation": "IN" },
-            { "name": "Rhode Island", "abbreviation": "RI" },
-            { "name": "Iowa", "abbreviation": "IA" },
-            { "name": "South Carolina", "abbreviation": "SC" },
-            { "name": "Kansas", "abbreviation": "KS" },
-            { "name": "South Dakota", "abbreviation": "SD" },
-            { "name": "Kentucky", "abbreviation": "KY" },
-            { "name": "Tennessee", "abbreviation": "TN" },
-            { "name": "Louisiana", "abbreviation": "LA" },
-            { "name": "Texas", "abbreviation": "TX" },
-            { "name": "Maine", "abbreviation": "ME" },
-            { "name": "Utah", "abbreviation": "UT" },
-            { "name": "Maryland", "abbreviation": "MD" },
-            { "name": "Vermont", "abbreviation": "VT" },
-            { "name": "Massachusetts", "abbreviation": "MA" },
-            { "name": "Virginia", "abbreviation": "VA" },
-            { "name": "Michigan", "abbreviation": "MI" },
-            { "name": "Washington", "abbreviation": "WA" },
-            { "name": "Minnesota", "abbreviation": "MN" },
-            { "name": "West Virginia", "abbreviation": "WV" },
-            { "name": "Mississippi", "abbreviation": "MS" },
-            { "name": "Wisconsin", "abbreviation": "WI" },
-            { "name": "Missouri", "abbreviation": "MO" },
-            { "name": "Wyoming", "abbreviation": "WY" }
-            ];
-    
-            var l = states.length,
-                i;
-    
-            State.remove({});
-    
-            for (i = 0; i < l; i++) {
-                var state = new State ({ 'id': i + 1, 'name': states[i].name, 'abbreviation': states[i].abbreviation });
-                state.save();
-            }
+        State.remove({})
+        .then(returned => {console.log('States removed.')})
+        .catch(err => {console.log(err)});
+
+        State.insertMany(seedData.states)
+        .then(r => {console.log('States added successfully.')})
+        .catch(err => {console.log(err)});
+
+        //valid beds
+        Valid_Beds.remove({})
+        .then(returned => {console.log('Valid beds removed.')})
+        .catch(err => {console.log(err)});
+        
+        Valid_Beds.insertMany(seedData.valid_beds)
+        .then(returned => {console.log('Valid beds added.')})
+        .catch(err => {console.log(err)});
+
+        //valid baths
+        Valid_Baths.remove({})
+        .then(returned => {console.log('Valid baths removed.')})
+        .catch(err => {console.log(err)});
+        
+        Valid_Baths.insertMany(seedData.valid_baths)
+        .then(returned => {console.log('Valid baths added.')})
+        .catch(err => {console.log(err)});
+
+        //valid baths
+        Valid_PriceDictionary.remove({})
+        .then(returned => {console.log('Valid PriceDictionary removed.')})
+        .catch(err => {console.log(err)});
+        
+        Valid_PriceDictionary.insertMany(seedData.valid_price_dictionary)
+        .then(returned => {console.log('Valid PriceDictionary added.')})
+        .catch(err => {console.log(err)});
     }
 }
 
