@@ -3,7 +3,7 @@ const State = require('../models/state')
 
 class Seeder {
     init() {
-        mongoose.connection()
+        mongoose.connection.db.listCollections({name: 'listings'})
                 .next((err, collinfo) => {
                     if (!collinfo) {
                         console.log('Starting db Seeder...');
