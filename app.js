@@ -5,7 +5,8 @@ const app = express();
 const propertyController = require('./controllers/api/property/property.controller');
 const lookupController = require('./controllers/api/lookup/lookup.controller');
 const database = require('./data-access/database');
-const seeder = require('./data-access/seeder')
+const seeder = require('./data-access/seeder');
+const bodyParser = require('body-parser');
 //const globalTunnel = require('global-tunnel');
 const port = 3000;
 
@@ -22,6 +23,8 @@ class Server {
     initExpressMiddleWare() {
         app.use(favicon(__dirname + '/public/images/favicon.ico'));
         app.use(express.static(__dirname + '/public'));
+        app.use(bodyParser.urlencoded({ extended: true }));
+        app.use(bodyParser.json());
     }
 
     start() {

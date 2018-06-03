@@ -11,17 +11,27 @@ class LookupController {
         this.router.get('/pricedictionaries', this.getPriceDictionaries.bind(this));
     }
 
+    errorHandler(err) {
+        console.log(err);
+    }
+
     getBeds(req, res, next) {
-        const data = Valid_Beds.find({});
-        return res.json(data);
+        Valid_Beds.find({}, 'id name description bedCount',(err, data) => { 
+            this.errorHandler(err);
+            res.json(data);
+        });
     }
     getBaths(req, res, next) {
-        const data = Valid_Baths.find({});
-        return res.json(data);
+        Valid_Baths.find({}, 'id name description bathCount',(err, data) => { 
+            this.errorHandler(err);
+            res.json(data);
+        });
     }
     getPriceDictionaries(req, res, next) {
-        const data = Valid_PriceDictionaries.find({});
-        return res.json(data);
+        Valid_PriceDictionaries.find({}, 'id name description startPrice endPrice',(err, data) => { 
+            this.errorHandler(err);
+            res.json(data);
+        });
     }
 }
 
